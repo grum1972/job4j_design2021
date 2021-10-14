@@ -27,9 +27,9 @@ public class Generics {
         gen.printLowerBoundedWildCard(second);
     }
 
-    public void printObject(List<? extends Object> list) {
-        for (Iterator<? extends Object> it = list.iterator(); it.hasNext();) {
-            Object next = it.next();
+    public void printObject(List<? extends Animal> list) {
+        for (Iterator<? extends Animal> it = list.iterator(); it.hasNext();) {
+            Animal next = it.next();
             System.out.println("Текущий элемент: " + next);
         }
     }
