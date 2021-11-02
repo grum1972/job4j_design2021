@@ -14,42 +14,44 @@ public class SimpleArrayList<T> implements List<T> {
         this.container = (T[]) new Object[capacity];
     }
 
-    @Override
-    public void add(T value) {
+    private void checkCapacity() {
         if (size == container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
-        container[this.size] = value;
-        this.modCount++;
-        this.size++;
+    }
+
+    @Override
+    public void add(T value) {
+        checkCapacity();
+        container[size] = value;
+        modCount++;
+        size++;
     }
 
     @Override
     public T set(int index, T newValue) {
-        T oldValue = null;
-        if (Objects.checkIndex(index, container.length) >= 0) {
-            oldValue = container[index];
-            container[index] = newValue;
-        }
+        T oldValue;
+        Objects.checkIndex(index, container.length);
+        oldValue = container[index];
+        container[index] = newValue;
         return oldValue;
     }
 
     @Override
     public T remove(int index) {
-        T rem = null;
-        if (Objects.checkIndex(index, container.length) >= 0) {
-            rem = container[index];
+        T rem;
+        Objects.checkIndex(index, container.length);
+        rem = container[index];
         System.arraycopy(
                 container,
                 index + 1,
                 container,
                 index,
-                this.size - 1
+                size - 1
                 );
-        container[this.size - 1] = null;
-        this.size--;
-        this.modCount++;
-        }
+        container[size - 1] = null;
+        size--;
+        modCount++;
         return rem;
     }
 
@@ -60,22 +62,23 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-        return this.size;
+        return size;
     }
 
     @Override
     public Iterator<T> iterator() {
 
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private int index;
             private int expectedModCount = modCount;
+
             @Override
             public boolean hasNext() {
                 return index < size;
             }
 
             @Override
-            public T next()  {
+            public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
