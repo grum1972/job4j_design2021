@@ -15,7 +15,7 @@ public class SimpleArrayListTest {
 
     @Before
     public void initData() {
-        list = new SimpleArrayList<>(5);
+        list = new SimpleArrayList<>(0);
         list.add(1);
         list.add(2);
         list.add(3);

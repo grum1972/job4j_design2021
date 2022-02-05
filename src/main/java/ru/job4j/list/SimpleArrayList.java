@@ -15,9 +15,13 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     private void checkCapacity() {
+        if (container.length == 0) {
+            container = Arrays.copyOf(container, 1);
+        }
         if (size == container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
+
     }
 
     @Override
@@ -53,7 +57,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size());
         return container[index];
     }
 
@@ -71,6 +75,9 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException("The list has been modified");
+                }
                 return index < size;
             }
 
@@ -78,9 +85,6 @@ public class SimpleArrayList<T> implements List<T> {
             public T next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException("The list has been modified");
                 }
                 return container[index++];
             }
