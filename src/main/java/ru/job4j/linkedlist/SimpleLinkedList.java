@@ -5,24 +5,18 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleLinkedList<E> implements List<E> {
-    private static int index;
     private int size;
     private Node<E> first;
     private Node<E> last;
     private int modCount;
 
-    SimpleLinkedList() {
-        index = 0;
-    }
-
     private static class Node<E> {
-        private int index;
+        //private int index;
         private E item;
         private Node<E> next;
         private Node<E> prev;
 
         Node(Node<E> prev, E element, Node<E> next) {
-            this.index = SimpleLinkedList.index;
             this.item = element;
             this.next = next;
             this.prev = prev;
@@ -42,14 +36,14 @@ public class SimpleLinkedList<E> implements List<E> {
         }
         size++;
         modCount++;
-        index++;
+        //index++;
     }
 
     @Override
     public E get(int index) {
         Node<E> cursor = first;
         Objects.checkIndex(index, size);
-        while (cursor.index != index) {
+        for (int i = 0; i < index; i++) {
             cursor = cursor.next;
         }
         return cursor.item;
