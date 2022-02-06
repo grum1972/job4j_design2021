@@ -11,7 +11,6 @@ public class SimpleLinkedList<E> implements List<E> {
     private int modCount;
 
     private static class Node<E> {
-        //private int index;
         private E item;
         private Node<E> next;
         private Node<E> prev;
@@ -36,7 +35,6 @@ public class SimpleLinkedList<E> implements List<E> {
         }
         size++;
         modCount++;
-        //index++;
     }
 
     @Override
