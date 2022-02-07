@@ -33,7 +33,6 @@ public class ForwardLinked<T> implements Iterable<T> {
         T value = pointer.value;
         head = pointer.next;
         pointer.next = null;
-        pointer = null;
         return value;
     }
 
