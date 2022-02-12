@@ -80,7 +80,6 @@ public class SimpleMapTest {
         Assert.assertEquals("Mike", iterator.next());
         Assert.assertTrue(iterator.hasNext());
         Assert.assertEquals("Maria", iterator.next());
-        //Assert.assertFalse(iterator.hasNext());
     }
 
     @Test(expected = ConcurrentModificationException.class)

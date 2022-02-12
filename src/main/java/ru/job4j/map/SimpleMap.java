@@ -21,7 +21,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean put(K key, V value) {
         if (count > capacity * LOAD_FACTOR) {
             expand();
-
         }
         int i = indexFor(hash(key.hashCode()));
         boolean rsl = (table[i] == null);
