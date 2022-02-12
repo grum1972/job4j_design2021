@@ -19,6 +19,10 @@ public class SimpleMapTest {
     public void whenPutAndNotPlace() {
         SimpleMap<String, Integer> map = new SimpleMap<>();
         map.put("Ivan", 10);
+        map.put("Igor", 20);
+        map.put("Oleg", 30);
+        map.put("Maria", 40);
+        map.put("Diana", 50);
         Assert.assertFalse(map.put("Ivan", 20));
 
     }
@@ -67,7 +71,7 @@ public class SimpleMapTest {
     @Test
     public void whenCheckIterator() {
         SimpleMap<String, Integer> map = new SimpleMap<>();
-        map.put("Ivan", 10);
+      map.put("Ivan", 10);
         map.put("Igor", 20);
         map.put("Maria", 30);
         map.put("Elena", 40);
@@ -75,11 +79,11 @@ public class SimpleMapTest {
         System.out.println(map);
         Iterator<String> iterator = map.iterator();
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("Ivan", iterator.next());
-        Assert.assertTrue(iterator.hasNext());
         Assert.assertEquals("Mike", iterator.next());
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("Maria", iterator.next());
+        Assert.assertEquals("Igor", iterator.next());
+        Assert.assertTrue(iterator.hasNext());
+        Assert.assertEquals("Ivan", iterator.next());
     }
 
     @Test(expected = ConcurrentModificationException.class)

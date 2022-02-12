@@ -1,13 +1,10 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
-    private static final float LOAD_FACTOR = 0.75f;
+    private static final float LOAD_FACTOR = 0.45f;
 
     private int capacity = 8;
 
@@ -33,16 +30,25 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return 37 * 7 + hashCode;
+        return hashCode ^ (hashCode >>> 16);
     }
 
     private int indexFor(int hash) {
-        return hash % 3;
+        return (capacity - 1) & hash;
     }
 
     private void expand() {
-        table = Arrays.copyOf(table, table.length * 2);
+        int oldCapacity = capacity;
+        MapEntry<K, V>[] oldTable = table;
         capacity *= 2;
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
+        table = newTable;
+        for (int j = 0; j < oldCapacity; j++) {
+            if (oldTable[j] != null) {
+                int i = indexFor(hash(oldTable[j].key.hashCode()));
+                table[i] = oldTable[j];
+            }
+        }
     }
 
     @Override
@@ -86,10 +92,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
             @Override
             public K next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return (table[index] != null) ? table[index++].key : null;
+                do {
+                    if (!hasNext()) {
+                        throw new NoSuchElementException();
+                    }
+                } while (table[index++] == null);
+                return table[index - 1].key;
             }
         };
     }
