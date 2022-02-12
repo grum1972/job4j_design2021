@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
-    private static final float LOAD_FACTOR = 0.45f;
+    private static final float LOAD_FACTOR = 0.75f;
 
     private int capacity = 8;
 
@@ -34,7 +34,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexFor(int hash) {
-        return (capacity - 1) & hash;
+        return hash & (capacity - 1);
     }
 
     private void expand() {
@@ -87,17 +87,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException("The map has been modified");
                 }
+                while (index < table.length && table[index] == null) {
+                    index++;
+                }
                 return index < table.length;
             }
 
             @Override
             public K next() {
-                do {
                     if (!hasNext()) {
                         throw new NoSuchElementException();
                     }
-                } while (table[index++] == null);
-                return table[index - 1].key;
+                return table[index++].key;
             }
         };
     }
