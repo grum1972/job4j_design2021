@@ -21,6 +21,7 @@ public class ConfigTest {
         String path = "./data/pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
+        assertThat(config.value("hibernate.connection.password"), is("password"));
     }
 
     @Test(expected = IllegalArgumentException.class)
