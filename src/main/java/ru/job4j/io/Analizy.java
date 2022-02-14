@@ -31,7 +31,7 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        Analizy anal = new Analizy();
-        anal.unavailable("server.log", "target.log");
+        Analizy analyze = new Analizy();
+        analyze.unavailable("server.log", "target.log");
     }
 }
