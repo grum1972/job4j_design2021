@@ -35,4 +35,14 @@ public class ArgsNameTest {
     public void whenWrongSomeArgument() {
         ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "-Xmx="});
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongKeySomeArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "=123"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongFormatArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "x=123"});
+    }
 }
