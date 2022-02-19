@@ -27,39 +27,33 @@ public class Zip {
         }
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(
-                new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Zip zip = new Zip();
-
+    public void validateCountArgs(String[] args) {
         if (args.length != 3) {
             throw new IllegalArgumentException("You need input root folder "
                     + "and file extension for search");
         }
+    }
+
+    public void validateStartDir(Path start) {
+        if (!start.toFile().isDirectory()) {
+            throw new IllegalArgumentException("You need input root folder first argument");
+        }
+    }
+
+    public String controlExt(String ext) {
+        return (ext.charAt(0) != '.') ? "." + ext : ext;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Zip zip = new Zip();
+        zip.validateCountArgs(args);
         ArgsName argZip = ArgsName.of(args);
         Path start = Paths.get(argZip.get("d"));
         String ext = argZip.get("e");
         Path output = Paths.get(argZip.get("o"));
-        if (!start.toFile().isDirectory()) {
-            throw new IllegalArgumentException("You need input root folder first argument");
-        }
-        if (ext.charAt(0) != '.') {
-            ext = "." + argZip.get("e");
-        }
-        String finalExt = ext;
-        List<Path> sources = search(start, p -> p.toFile().getName().endsWith(finalExt));
-
+        zip.validateStartDir(start);
+        String finalExt = zip.controlExt(argZip.get("e"));
+        List<Path> sources = search(start, p -> !p.toFile().getName().endsWith(finalExt));
         zip.packFiles(sources, output.toFile());
-
     }
 }
