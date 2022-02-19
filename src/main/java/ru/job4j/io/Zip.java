@@ -27,20 +27,20 @@ public class Zip {
         }
     }
 
-    public void validateCountArgs(String[] args) {
+    private void validateCountArgs(String[] args) {
         if (args.length != 3) {
             throw new IllegalArgumentException("You need input root folder "
                     + "and file extension for search");
         }
     }
 
-    public void validateStartDir(Path start) {
+    private void validateStartDir(Path start) {
         if (!start.toFile().isDirectory()) {
             throw new IllegalArgumentException("You need input root folder first argument");
         }
     }
 
-    public String controlExt(String ext) {
+    private String controlExt(String ext) {
         return (ext.charAt(0) != '.') ? "." + ext : ext;
     }
 
