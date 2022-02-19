@@ -49,7 +49,6 @@ public class Zip {
         zip.validateCountArgs(args);
         ArgsName argZip = ArgsName.of(args);
         Path start = Paths.get(argZip.get("d"));
-        String ext = argZip.get("e");
         Path output = Paths.get(argZip.get("o"));
         zip.validateStartDir(start);
         String finalExt = zip.controlExt(argZip.get("e"));
