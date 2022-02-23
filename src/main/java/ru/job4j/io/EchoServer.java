@@ -17,13 +17,9 @@ public class EchoServer {
                          str != null && !str.isEmpty();
                          str = in.readLine()) {
                         System.out.println(str);
-                        if (str.contains("msg")) {
-                            str = str.substring(str.indexOf('=') + 1);
-                            str = str.substring(0, str.indexOf(' '));
-                            if (str.contains("Bye")) {
+                        if (str.contains(" /?msg=Bye")) {
                                 server.close();
                                 break;
-                            }
                         }
                     }
                     out.flush();
