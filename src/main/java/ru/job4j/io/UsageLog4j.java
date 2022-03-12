@@ -21,5 +21,9 @@ public class UsageLog4j {
         LOG.debug("This is population on Earth : {}", population);
         double mean = 2.3456778;
         LOG.debug("This is just double number : {}", mean);
+        boolean isTrue = true;
+        LOG.debug("This is trust : {}", isTrue);
+        short s = 32767;
+        LOG.debug("This is short var : {}", s);
     }
 }
