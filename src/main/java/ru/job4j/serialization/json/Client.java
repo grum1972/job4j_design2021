@@ -15,6 +15,22 @@ public class Client {
         this.autos = autos;
     }
 
+    public boolean isOwner() {
+        return owner;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String[] getAutos() {
+        return autos;
+    }
+
     @Override
     public String toString() {
         return "Client{"
